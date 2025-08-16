@@ -1,0 +1,26 @@
+from rest_framework import serializers
+from .models import Destination, Category, Package, PackageMedia
+
+class DestinationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Destination
+        fields = '__all__'
+        
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+class PackageMediaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PackageMedia
+        fields = '__all__'
+    
+class PackageSerializer(serializers.ModelSerializer):
+    destination = DestinationSerializer(read_only=True)
+    category = CategorySerializer(read_only=True)
+    media = PackageMediaSerializer(many=True, read_only=True)
+    
+    class Meta:
+        model = Package
+        fields = '__all__'
