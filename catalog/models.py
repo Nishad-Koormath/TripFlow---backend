@@ -36,7 +36,7 @@ class Package(models.Model):
         return self.title
 
 class PackageMedia(models.Model):
-    package = models.ForeignKey(Packages, on_delete=models.CASCADE, related_name='media')
+    package = models.ForeignKey(Package, on_delete=models.CASCADE, related_name='media')
     url = models.URLField()
     caption = models.CharField(max_length=200, blank=True)
     order = models.PositiveIntegerField(default=0)
