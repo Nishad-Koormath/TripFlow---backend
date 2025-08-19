@@ -20,6 +20,7 @@ class PackageSerializer(serializers.ModelSerializer):
     destination = DestinationSerializer(read_only=True)
     category = CategorySerializer(read_only=True)
     media = PackageMediaSerializer(many=True, read_only=True)
+    thumbnail = serializers.ImageField(use_url=True)
     
     class Meta:
         model = Package
