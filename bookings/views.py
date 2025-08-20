@@ -8,7 +8,7 @@ from .permissions import IsOwnerOrAdmin
 # Create your views here.
 class BookingViewSet(viewsets.ModelViewSet):
     serializer_class = BookingSerializer
-    permission_classes = [permissions.IsAuthenticated, IsOwnerOrAdmin]
+    permission_classes = [ IsOwnerOrAdmin]
     
     def get_queryset(self):
         user = self.request.user
@@ -19,5 +19,5 @@ class BookingViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         package = serializer.validated_data['package']
         num_people = serializer.validated_data['num_people']
-        total_price = package.price * num_people
+        total_price = package.base_price * num_people
         serializer.save(user=self.request.user, total_price=total_price)
