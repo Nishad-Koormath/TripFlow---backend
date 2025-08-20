@@ -12,7 +12,7 @@ class DestinationListView(generics.ListAPIView):
     search_fields = ['name', 'country']
     permission_classes = [IsAdminOrReadOnly]
     
-class DestinationDetailView(generics.ListAPIView):
+class DestinationDetailView(generics.RetrieveAPIView):
     queryset = Destination.objects.all()
     serializer_class = DestinationSerializer
     permission_classes = [IsAdminOrReadOnly]
@@ -29,7 +29,7 @@ class PackageListView(generics.ListAPIView):
     search_fields = ['title', 'summary']
     permission_classes = [IsAdminOrReadOnly]
 
-class PackageDetailView(generics.ListAPIView):
+class PackageDetailView(generics.RetrieveAPIView):
     queryset = Package.objects.all()
     serializer_class = PackageSerializer
     permission_classes = [IsAdminOrReadOnly]
