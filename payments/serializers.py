@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from ..payment.models import Payment
+from .models import Payment
 import uuid
 
 
