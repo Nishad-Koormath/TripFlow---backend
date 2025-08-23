@@ -7,12 +7,12 @@ class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Payment
         fields = '__all__'
-        read_only_fields = ['user', 'transaction_id', 'status', 'created_at']
+        read_only_fields = ['user', 'transaction_id', 'created_at', 'amount']
         
     def create(self, validated_data):
         booking = validated_data['booking']
         amount = booking.total_price
-        user = validated_data['user']
+        user = self.context['request'].user
         
         transaction_id = str(uuid.uuid4())[:8].upper()
         
