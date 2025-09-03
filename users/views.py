@@ -12,10 +12,6 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
     
-    def perform_create(self, serializer):
-        user = serializer.save(is_staff=False, is_superuser=False)
-        return user
-    
 class MeView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
