@@ -11,6 +11,8 @@ from payments.serializers import PaymentSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from django.db.models import Sum, Count
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 
 User = get_user_model()
@@ -24,17 +26,19 @@ class IsAdmin(permissions.BasePermission):
 def dashboard_stats(request):
     total_users = User.objects.count()
     total_bookings = Bookings.objects.count()
-    total_revenue = Payment.objects.aggregate(total=Sum('amount'))['total'] or 0
     pending_bookings = Bookings.objects.filter(status='pending').count()
+    
+    stats = Payment.objects.aggregate(total_revenue=Sum('amount'))
+
     
     return Response({
         'total_users': total_users,
         'total_bookings': total_bookings,
-        'total_revenue': total_revenue,
+        'total_revenue': stats['total_revenue'] or 0,
         'pending_bookings': pending_bookings
     })
     
-class UserViewSet(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAdmin]
@@ -63,3 +67,5 @@ class BookingAdminViewSet(viewsets.ModelViewSet):
     queryset = Bookings.objects.all()
     serializer_class = BookingSerializer
     permission_classes = [IsAdmin]
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['status', 'user', 'package']

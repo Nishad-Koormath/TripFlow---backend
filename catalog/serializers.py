@@ -17,8 +17,12 @@ class PackageMediaSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
 class PackageSerializer(serializers.ModelSerializer):
-    destination = DestinationSerializer(read_only=True)
-    category = CategorySerializer(read_only=True)
+    destination = serializers.PrimaryKeyRelatedField(
+        queryset=Destination.objects.all()
+    )
+    category = serializers.PrimaryKeyRelatedField(
+        queryset=Category.objects.all()
+    )
     media = PackageMediaSerializer(many=True, read_only=True)
     thumbnail = serializers.ImageField(use_url=True)
     
