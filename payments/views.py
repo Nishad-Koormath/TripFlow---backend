@@ -26,7 +26,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
         currency = 'INR'
         
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
-        order = client.order.create({'amount': amount, 'currency': currency, 'payment_captre': '1'})
+        order = client.order.create({'amount': amount, 'currency': currency, 'payment_capture': '1'})
         
         payment = Payment.objects.create(
             booking=booking,
@@ -46,7 +46,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
     
     @action(detail=True, methods=['post'])
     def verify(self, request, pk=None):
-        payemnt = self.get_object()
+        payment = self.get_object()
         data = request.data
         
         client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
