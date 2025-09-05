@@ -1,6 +1,7 @@
-from django.urls import path
-from .views import PaymentCreateView
+from rest_framework.routers import DefaultRouter
+from .views import PaymentViewSet
 
-urlpatterns = [
-    path('create/', PaymentCreateView.as_view(), name='payment-create'),
-]
+router = DefaultRouter()
+router.register(r"", PaymentViewSet, basename="payment")
+
+urlpatterns = router.urls
