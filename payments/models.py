@@ -5,6 +5,7 @@ from django.conf import settings
 # Create your models here.
 class Payment(models.Model):
     STATUS_CHOICES = [
+        ("created", "Created"),
         ("pending", "Pending"),
         ("success", "Success"),
         ("failed", "Failed"),
